@@ -6,9 +6,12 @@ import { StatusBar } from '@ionic-native/status-bar';
 
 import { HttpModule} from '@angular/http';
 
+import { SignaturePadModule } from 'angular2-signaturepad';
+
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import {SignPage} from "../pages/sign/sign";
+import {DetailPage} from "../pages/sign/detail";
 import {ToolService} from "../util/tool.service";
 import {SignService} from "../pages/sign/sign.service";
 
@@ -16,26 +19,26 @@ import {SignService} from "../pages/sign/sign.service";
   declarations: [
     MyApp,
     HomePage,
-    SignPage
+    SignPage,
+    DetailPage
   ],
   imports: [
     BrowserModule,
     HttpModule,
     IonicModule.forRoot(MyApp,{},{
       links:[
-        {component:SignPage,name:'TabsPage',segment:'sign/:ids'}
+        {component:HomePage,name:'HomePage',segment:'home'},
+        {component:SignPage,name:'TabsPage',segment:'sign/:ids',defaultHistory:[HomePage]}
       ]
     }),
-
-
-
-
+    SignaturePadModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     HomePage,
-    SignPage
+    SignPage,
+    DetailPage
   ],
   providers: [
     StatusBar,

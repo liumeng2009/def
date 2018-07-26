@@ -1,0 +1,87 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">关闭</button>
+    </ion-buttons>
+    <ion-title>
+      工单信息
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-refresher #refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-list inset>
+    <ion-item-group>
+      <ion-item-divider sticky>
+        <ion-label>
+          {{operation?.no}}号工单
+        </ion-label>
+      </ion-item-divider>
+
+      <ion-item-sliding>
+        <ion-item>
+          <ion-label fixed>公司：</ion-label>
+          <ion-label>
+            {{operation?.order?.corporation.name}}
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label fixed>来电号码：</ion-label>
+          <ion-label>
+            {{operation?.order?.custom_phone=='15822927208'?'':operation?.order?.custom_phone}}
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label fixed>内容：</ion-label>
+          <ion-label *ngIf="operation?.businessContent?.sequence==0">
+            {{operation?.businessContent?.equipment}}{{operation?.businessContent?.equipOp?.name}}
+          </ion-label>
+          <ion-label *ngIf="operation?.businessContent?.sequence==1" >
+            {{operation?.businessContent?.equipOp?.name}}{{operation?.businessContent?.equipment}}
+          </ion-label>
+        </ion-item>
+      </ion-item-sliding>
+    </ion-item-group>
+  </ion-list>
+
+
+  <ion-list inset>
+    <ion-item *ngIf="operation?.actions.length==0">
+      没有相关记录
+    </ion-item>
+    <ion-item-group *ngFor="let action of operation?.actions">
+      <ion-item-divider sticky>
+        <ion-label>
+          {{action?.user?.name}}的处理进程
+        </ion-label>
+      </ion-item-divider>
+
+      <ion-item-sliding>
+        <ion-item>
+          <ion-label fixed>指派时间:</ion-label>
+          <ion-label color="secondary" *ngIf="action.call_time">{{action.call_time_date_show}}</ion-label>
+          <ion-label color="danger" *ngIf="!action.call_time">{{action.call_time_date_show}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label fixed>开始时间:</ion-label>
+          <ion-label color="danger"  *ngIf="!action.start_time">{{action.start_time_date_show}}</ion-label>
+          <ion-label color="secondary"  *ngIf="action.start_time">{{action.start_time_date_show}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label fixed>结束时间:</ion-label>
+          <ion-label color="danger"  *ngIf="!action.end_time">{{action.end_time_date_show}}</ion-label>
+          <ion-label color="secondary"  *ngIf="action.end_time">{{action.end_time_date_show}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label fixed></ion-label>
+          <ion-label color="secondary" *ngIf="action.operationComplete">工单已完成</ion-label>
+          <ion-label color="danger" *ngIf="!action.operationComplete">工单未完成，还需要其他进程的处理</ion-label>
+        </ion-item>
+      </ion-item-sliding>
+      <ion-item></ion-item>
+    </ion-item-group>
+  </ion-list>
+
+</ion-content>
