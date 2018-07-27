@@ -7,6 +7,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { HttpModule} from '@angular/http';
 
 import { SignaturePadModule } from 'angular2-signaturepad';
+import {CookieService} from 'angular2-cookie/core'
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -45,7 +46,8 @@ import {SignService} from "../pages/sign/sign.service";
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     SignService,
-    ToolService
+    ToolService,
+    CookieService
   ]
 })
 export class AppModule {}

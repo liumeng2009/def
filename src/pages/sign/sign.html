@@ -12,11 +12,8 @@
 
 <ion-content>
 
-  <ion-buttons *ngFor="let op of ops" #idList padding>
-    <button ion-button  small  color="dark" (click)="modal(op.id)">{{op.no}}</button>
-    <button ion-button  small  color="dark" (click)="modal(op.id)">{{op.no}}</button>
-    <button ion-button  small  color="dark" (click)="modal(op.id)">{{op.no}}</button>
-    <button ion-button  small  color="dark" (click)="modal(op.id)">{{op.no}}</button>
+  <ion-buttons #idList padding>
+    <button  *ngFor="let op of ops" outline round ion-button  small  color="dark" (click)="modal(op.id)">{{op.no}}</button>
   </ion-buttons>
 
 

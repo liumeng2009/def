@@ -7,6 +7,7 @@ import {SignPage} from "../sign/sign";
 import {ModalController} from "ionic-angular/index";
 import * as moment from 'moment'
 
+
 @Component({
   templateUrl:'detail.html',
   selector:'detail'

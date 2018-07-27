@@ -6,6 +6,7 @@ import {SignService} from "./sign.service";
 import {ToolService} from "../../util/tool.service";
 import {DetailPage} from './detail';
 import {SignaturePad} from "angular2-signaturepad/signature-pad";
+import {CookieService} from "angular2-cookie/core";
 
 @Component({
   selector: 'sign',
@@ -17,7 +18,8 @@ export class SignPage {
               private signService:SignService,
               private toolService:ToolService,
               private navParams:NavParams,
-              private modalCtrl:ModalController
+              private modalCtrl:ModalController,
+              private cookieService:CookieService
   ) {
 
   }
@@ -29,6 +31,7 @@ export class SignPage {
 
   initNo(){
     let params=this.navParams.data.ids;
+    this.cookieService.put('ids',params);
     let ids=params.split(',');
     console.log(ids);
     this.signService.getOperationNos({ids:ids}).then(
