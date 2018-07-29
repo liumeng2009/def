@@ -29,7 +29,7 @@ import {SignService} from "../pages/sign/sign.service";
     IonicModule.forRoot(MyApp,{},{
       links:[
         {component:HomePage,name:'HomePage',segment:'home'},
-        {component:SignPage,name:'TabsPage',segment:'sign/:ids',defaultHistory:[HomePage]}
+        {component:SignPage,name:'TabsPage',segment:'sign/:signid/:ids',defaultHistory:[HomePage]}
       ]
     }),
     SignaturePadModule

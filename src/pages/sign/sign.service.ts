@@ -11,6 +11,7 @@ export class SignService{
   private getoperationurl=new Config().serverPath+'/api/operation'
   private getoperationnourl=new Config().serverPath+'/api/operation/no_list'
   private operationDetailActionUrl=new Config().serverPath+'/api/operation/getaction/'
+  private clientSignUrl=new Config().serverPath+'/api/sign/clientSign'
 
   getOperation(id):Promise<ResponseData>{
     return this.http.get(this.getoperationurl+'/'+id,{headers: this.headers})
@@ -28,6 +29,13 @@ export class SignService{
 
   getOperationNos(ids:any):Promise<ResponseData>{
     return this.http.post(this.getoperationnourl,ids,{headers: this.headers})
+      .toPromise()
+      .then(this.extractData)
+      .catch(this.handleError)
+  }
+
+  getClientInfo(userAgent:string):Promise<ResponseData>{
+    return this.http.post(this.clientSignUrl,{agent:userAgent},{headers: this.headers})
       .toPromise()
       .then(this.extractData)
       .catch(this.handleError)

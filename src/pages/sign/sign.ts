@@ -1,5 +1,4 @@
 import { Component,ViewChild,ElementRef } from '@angular/core';
-import {Location} from '@angular/common'
 import { NavController,NavParams,ModalController } from 'ionic-angular';
 import {Operation} from "../../bean/operation";
 import {SignService} from "./sign.service";
@@ -7,6 +6,7 @@ import {ToolService} from "../../util/tool.service";
 import {DetailPage} from './detail';
 import {SignaturePad} from "angular2-signaturepad/signature-pad";
 import {CookieService} from "angular2-cookie/core";
+import {Client} from '../../bean/client'
 
 @Component({
   selector: 'sign',
@@ -26,7 +26,33 @@ export class SignPage {
 
   private ops:Operation[]=[];
   ionViewWillEnter(){
+    this.initAuth();
     this.initNo();
+  }
+
+  private client:Client;
+  initAuth(){
+    let userAgent=window.navigator.userAgent;
+    this.signService.getClientInfo(userAgent).then(
+      data=>{
+        console.log(data);
+        let result=this.toolService.apiResult(data);
+        if(result&&result.status==0){
+          this.client={...result.data}
+          this.cookieService.put('OptUserId',this.client.userId);
+        }
+        else{
+          this.toolService.toast(result.message)
+        }
+      },
+      error=>{
+        this.toolService.toast(error)
+      }
+    )
+  }
+
+  getAuth(){
+    let userId=this.cookieService.get('OptUserId');
   }
 
   initNo(){
