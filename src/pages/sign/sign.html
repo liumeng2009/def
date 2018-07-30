@@ -4,8 +4,8 @@
       添加签名
     </ion-title>
     <ion-buttons end>
-      <button ion-button (click)="clear()">清除</button>
-      <button ion-button (click)="save()">保存(300秒)</button>
+      <button *ngIf="client?.clientSeconds>0" ion-button>还有{{client?.clientSeconds}}秒</button>
+      <button ion-button *ngIf="!client?.clientSeconds>0">已超时</button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
@@ -21,3 +21,12 @@
   <signature-pad [options]="signaturePadOptions" (onBeginEvent)="drawStart()" (onEndEvent)="drawComplete()"></signature-pad>
 
 </ion-content>
+
+<ion-footer #foot>
+  <ion-toolbar color="dark">
+    <ion-buttons end>
+      <button ion-button (click)="clear()">清除</button>
+      <button ion-button (click)="save()">保存</button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

@@ -32,14 +32,14 @@ export class SignPage {
 
   private client:Client;
   initAuth(){
-    let userAgent=window.navigator.userAgent;
-    this.signService.getClientInfo(userAgent).then(
+    let signid=this.navParams.data.signid;
+    this.signService.getClientInfo(signid).then(
       data=>{
         console.log(data);
         let result=this.toolService.apiResult(data);
         if(result&&result.status==0){
           this.client={...result.data}
-          this.cookieService.put('OptUserId',this.client.userId);
+          this.calTime();
         }
         else{
           this.toolService.toast(result.message)
@@ -51,13 +51,27 @@ export class SignPage {
     )
   }
 
-  getAuth(){
-    let userId=this.cookieService.get('OptUserId');
+  calTime(){
+    let date=new Date();
+    let time=date.getTime()-this.client.start;
+    console.log(time);
+    let seconds=parseInt(time/1000);
+    this.client.clientSeconds=(this.client.clientSeconds-seconds)>0?(this.client.clientSeconds-seconds):0;
+    let loop=setInterval(()=>{
+      if(this.client.clientSeconds>0){
+        this.client.clientSeconds--;
+      }
+      else{
+        clearInterval(loop);
+      }
+    },1000)
   }
 
   initNo(){
     let params=this.navParams.data.ids;
+    let signid=this.navParams.data.signid;
     this.cookieService.put('ids',params);
+    this.cookieService.put('signid',signid);
     let ids=params.split(',');
     console.log(ids);
     this.signService.getOperationNos({ids:ids}).then(
@@ -90,17 +104,17 @@ export class SignPage {
   }
   @ViewChild('head') head:ElementRef;
   @ViewChild('idList') idList:ElementRef;
-
+  @ViewChild('foot') foot:ElementRef;
   calSignWH(){
     let hAll=window.document.body.clientHeight;
     let wAll=window.document.body.clientWidth;
 
     let headH=this.head.nativeElement.clientHeight;
     let idListH=this.idList.nativeElement.clientHeight;
-
+    let footH=this.foot.nativeElement.clientHeight;
 
     //有些不太稳定，-2
-    let h=hAll-headH-idListH-4;
+    let h=hAll-headH-idListH-footH;
 
     //this.signaturePadOptions.canvasWidth=wAll;
     //this.signaturePadOptions.canvasHeight=h;
@@ -128,4 +142,29 @@ export class SignPage {
     this.signaturePad.clear();
   }
 
+  save(){
+    if(this.signaturePad.toDataURL()&&this.signaturePad.toDataURL()!=''){
+      let params=this.navParams.data.ids;
+      let signid=this.navParams.data.signid;
+      let ids=params.split(',');
+      this.signService.saveSigns(ids,this.signaturePad.toDataURL(),signid).then(
+        data=>{
+          let result=this.toolService.apiResult(data);
+          if(result&&result.status==0){
+            console.log(result);
+          }
+          else{
+            this.toolService.toast(result.message);
+          }
+        },
+        error=>{
+          this.toolService.toast(error);
+        }
+      )
+    }
+    else{
+      this.toolService.toast('签名内容不能为空！')
+    }
+
+  }
 }

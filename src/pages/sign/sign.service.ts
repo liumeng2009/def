@@ -12,6 +12,7 @@ export class SignService{
   private getoperationnourl=new Config().serverPath+'/api/operation/no_list'
   private operationDetailActionUrl=new Config().serverPath+'/api/operation/getaction/'
   private clientSignUrl=new Config().serverPath+'/api/sign/clientSign'
+  private saveUrl=new Config().serverPath+'/api/sign/clientsave'
 
   getOperation(id):Promise<ResponseData>{
     return this.http.get(this.getoperationurl+'/'+id,{headers: this.headers})
@@ -34,8 +35,15 @@ export class SignService{
       .catch(this.handleError)
   }
 
-  getClientInfo(userAgent:string):Promise<ResponseData>{
-    return this.http.post(this.clientSignUrl,{agent:userAgent},{headers: this.headers})
+  getClientInfo(signid:string):Promise<ResponseData>{
+    return this.http.post(this.clientSignUrl,{signid:signid},{headers: this.headers})
+      .toPromise()
+      .then(this.extractData)
+      .catch(this.handleError)
+  }
+
+  saveSigns(ids:string[],sign:string,signid:string):Promise<ResponseData>{
+    return this.http.post(this.saveUrl,{signid:signid,sign:sign,ids:ids},{headers: this.headers})
       .toPromise()
       .then(this.extractData)
       .catch(this.handleError)
