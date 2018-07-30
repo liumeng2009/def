@@ -3,6 +3,8 @@ export class Client {
     public signId:string,
     public clientSeconds: number,
     public start: number,
-    public status:number
+    public status:number,
+    public signString:string,
+    public ops:string
   ) {  }
 }

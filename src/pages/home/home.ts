@@ -4,6 +4,7 @@ import {SignPage} from "../sign/sign";
 import {CookieService} from "angular2-cookie/core";
 import {ToolService} from "../../util/tool.service";
 import {SignService} from "../sign/sign.service";
+import {Client} from '../../bean/client';
 
 @Component({
   selector: 'page-home',
@@ -47,6 +48,7 @@ export class HomePage {
   }
 
   private client:Client;
+  private signComplete:boolean=false;
   initAuth(){
     let signid=this.cookieService.get('signid');
     this.signService.getClientInfo(signid).then(
@@ -55,7 +57,16 @@ export class HomePage {
         let result=this.toolService.apiResult(data);
         if(result&&result.status==0){
           this.client={...result.data}
-          this.calTime();
+          if(this.client.status==1){
+            this.calTime();
+          }
+          else if(this.client.status==2){
+            this.signComplete=true;
+          }
+          else{
+
+          }
+
         }
         else{
           this.toolService.toast(result.message)
@@ -72,7 +83,7 @@ export class HomePage {
     let date=new Date();
     let time=date.getTime()-this.client.start;
     console.log(time);
-    let seconds=parseInt(time/1000);
+    let seconds=Math.ceil(time/1000);
     this.client.clientSeconds=(this.client.clientSeconds-seconds)>0?(this.client.clientSeconds-seconds):0;
     this.loop=setInterval(()=>{
       if(this.client.clientSeconds>0){

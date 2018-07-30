@@ -13,9 +13,17 @@ export class SignService{
   private operationDetailActionUrl=new Config().serverPath+'/api/operation/getaction/'
   private clientSignUrl=new Config().serverPath+'/api/sign/clientSign'
   private saveUrl=new Config().serverPath+'/api/sign/clientsave'
+  private getSignUrl=new Config().serverPath+'/api/sign/'
 
   getOperation(id):Promise<ResponseData>{
     return this.http.get(this.getoperationurl+'/'+id,{headers: this.headers})
+      .toPromise()
+      .then(this.extractData)
+      .catch(this.handleError)
+  }
+
+  getSign(opid): Promise<ResponseData> {
+    return this.http.get(this.getSignUrl+opid,{headers:this.headers})
       .toPromise()
       .then(this.extractData)
       .catch(this.handleError)

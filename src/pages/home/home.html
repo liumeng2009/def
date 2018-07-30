@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar color="dark">
     <ion-title>
-      我们的小工具
+      一些小工具
     </ion-title>
   </ion-navbar>
 </ion-header>
@@ -22,11 +22,14 @@
     </ion-item>
   </ion-list>
 
-  <button *ngIf="client?.clientSeconds>0" ion-button color="dark" (click)="goSign()">
+  <button *ngIf="client?.clientSeconds>0&&!signComplete" ion-button color="dark" (click)="goSign()">
     继续添加签名({{client?.clientSeconds}})
   </button>
-  <button *ngIf="!client?.clientSeconds>0" ion-button color="dark" (click)="goSign()">
+  <button *ngIf="client?.clientSeconds<=0&&!signComplete" ion-button color="dark" (click)="goSign()">
     继续添加签名(已超时)
+  </button>
+  <button *ngIf="signComplete" ion-button color="dark" (click)="goSign()">
+    继续添加签名(签名已完成)
   </button>
 
 </ion-content>

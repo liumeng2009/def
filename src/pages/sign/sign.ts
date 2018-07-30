@@ -31,6 +31,7 @@ export class SignPage {
   }
 
   private client:Client;
+  private signComplete:boolean=false;
   initAuth(){
     let signid=this.navParams.data.signid;
     this.signService.getClientInfo(signid).then(
@@ -39,7 +40,30 @@ export class SignPage {
         let result=this.toolService.apiResult(data);
         if(result&&result.status==0){
           this.client={...result.data}
-          this.calTime();
+          if(this.client.status==1){
+            this.calTime();
+          }
+          else if(this.client.status==2){
+            //签名完毕
+            this.signComplete=true;
+            setTimeout(()=>{
+              this.signaturePad.fromDataURL(this.client.signString,{width:this.signaturePadOptions.canvasWidth,height:this.signaturePadOptions.canvasHeight});
+              if(this.client.ops){
+                let opArray=this.client.ops.split(',');
+                for(let opa of opArray){
+                  for(let o of this.ops){
+                    if(opa==o.id){
+                      o.done=true;
+                    }
+                  }
+                }
+              }
+            },100)
+          }
+          else{
+
+          }
+
         }
         else{
           this.toolService.toast(result.message)
@@ -55,7 +79,7 @@ export class SignPage {
     let date=new Date();
     let time=date.getTime()-this.client.start;
     console.log(time);
-    let seconds=parseInt(time/1000);
+    let seconds=Math.ceil(time/1000);
     this.client.clientSeconds=(this.client.clientSeconds-seconds)>0?(this.client.clientSeconds-seconds):0;
     let loop=setInterval(()=>{
       if(this.client.clientSeconds>0){
@@ -103,18 +127,16 @@ export class SignPage {
     canvasHeight: 300
   }
   @ViewChild('head') head:ElementRef;
-  @ViewChild('idList') idList:ElementRef;
   @ViewChild('foot') foot:ElementRef;
   calSignWH(){
     let hAll=window.document.body.clientHeight;
     let wAll=window.document.body.clientWidth;
 
     let headH=this.head.nativeElement.clientHeight;
-    let idListH=this.idList.nativeElement.clientHeight;
     let footH=this.foot.nativeElement.clientHeight;
 
     //有些不太稳定，-2
-    let h=hAll-headH-idListH-footH;
+    let h=hAll-headH-footH;
 
     //this.signaturePadOptions.canvasWidth=wAll;
     //this.signaturePadOptions.canvasHeight=h;
@@ -130,12 +152,12 @@ export class SignPage {
 
   drawComplete() {
     // will be notified of szimek/signature_pad's onEnd event
-    console.log(this.signaturePad.toDataURL());
+    //console.log(this.signaturePad.toDataURL());
   }
 
   drawStart() {
     // will be notified of szimek/signature_pad's onBegin event
-    console.log('begin drawing');
+    //console.log('begin drawing');
   }
 
   clear(){
@@ -143,7 +165,7 @@ export class SignPage {
   }
 
   save(){
-    if(this.signaturePad.toDataURL()&&this.signaturePad.toDataURL()!=''){
+    if(!this.signaturePad.isEmpty()){
       let params=this.navParams.data.ids;
       let signid=this.navParams.data.signid;
       let ids=params.split(',');
@@ -151,7 +173,16 @@ export class SignPage {
         data=>{
           let result=this.toolService.apiResult(data);
           if(result&&result.status==0){
-            console.log(result);
+            this.signComplete=true;
+            if(result.data instanceof Array){
+              for(let signResult of result.data){
+                for(let op of this.ops){
+                  if(op.id==signResult.operationId){
+                    op.done=true;
+                  }
+                }
+              }
+            }
           }
           else{
             this.toolService.toast(result.message);

@@ -7,6 +7,7 @@ export class Operation {
     public progress_name:string,
     public progress_status_code:number,
     public actions:any[],
-    public signString:string
+    public signString:string,
+    public done:boolean
   ) {  }
 }

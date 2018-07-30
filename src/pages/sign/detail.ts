@@ -29,6 +29,7 @@ export class DetailPage {
       }).catch(()=>{})
       console.log(this.operation)
     }).catch(()=>{});
+    this.getSign(id).then(()=>{}).catch(()=>{})
   }
 
   getData(id){
@@ -48,6 +49,30 @@ export class DetailPage {
         error=>{
           this.toolService.toast(error)
           reject();
+        }
+      )
+    })
+  }
+
+  private sign:string;
+  getSign(id){
+    return new Promise((resolve, reject)=>{
+      this.signService.getSign(id).then(
+        data=>{
+          console.log(data);
+          let result=this.toolService.apiResult(data);
+          if(result&&result.status==0){
+            this.sign=result.data;
+            resolve();
+          }
+          else{
+            this.toolService.toast(data.message)
+            reject()
+          }
+        },
+        error=>{
+          this.toolService.toast(error);
+          reject()
         }
       )
     })

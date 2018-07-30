@@ -4,26 +4,25 @@
       添加签名
     </ion-title>
     <ion-buttons end>
-      <button *ngIf="client?.clientSeconds>0" ion-button>还有{{client?.clientSeconds}}秒</button>
-      <button ion-button *ngIf="!client?.clientSeconds>0">已超时</button>
+      <button *ngIf="client?.clientSeconds>0&&!signComplete" ion-button>还有{{client?.clientSeconds}}秒</button>
+      <button ion-button *ngIf="client?.clientSeconds<=0&&!signComplete">已超时</button>
+      <button ion-button *ngIf="signComplete">签名已完成</button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-
-  <ion-buttons #idList padding>
-    <button  *ngFor="let op of ops" outline round ion-button  small  color="dark" (click)="modal(op.id)">{{op.no}}</button>
-  </ion-buttons>
-
-
-
   <signature-pad [options]="signaturePadOptions" (onBeginEvent)="drawStart()" (onEndEvent)="drawComplete()"></signature-pad>
-
 </ion-content>
 
 <ion-footer #foot>
   <ion-toolbar color="dark">
+    <p style="margin:0px;">
+      <button  *ngFor="let op of ops;let i = index;" [color]="op.done?'secondary':'light'" clear small ion-button (click)="modal(op.id)">
+      <ion-icon name="checkmark" color="secondary" *ngIf="op.done"></ion-icon>
+        工单{{i+1}}
+      </button>
+    </p>
     <ion-buttons end>
       <button ion-button (click)="clear()">清除</button>
       <button ion-button (click)="save()">保存</button>
