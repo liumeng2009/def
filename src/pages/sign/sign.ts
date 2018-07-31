@@ -38,7 +38,7 @@ export class SignPage {
       data=>{
         console.log(data);
         let result=this.toolService.apiResult(data);
-        if(result&&result.status==0){
+        if(result){
           this.client={...result.data}
           if(this.client.status==1){
             this.calTime();
@@ -63,10 +63,6 @@ export class SignPage {
           else{
 
           }
-
-        }
-        else{
-          this.toolService.toast(result.message)
         }
       },
       error=>{
@@ -101,12 +97,11 @@ export class SignPage {
     this.signService.getOperationNos({ids:ids}).then(
       data=>{
         let result=this.toolService.apiResult(data);
-        if(result&&result.status==0){
+        if(result){
           this.ops=[...result.data];
           setTimeout(()=>{
             this.calSignWH();
           },0)
-
         }
       },
       error=>{
@@ -183,9 +178,6 @@ export class SignPage {
                 }
               }
             }
-          }
-          else{
-            this.toolService.toast(result.message);
           }
         },
         error=>{

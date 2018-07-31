@@ -22,6 +22,7 @@
     </ion-item>
   </ion-list>
 
+
   <button *ngIf="client?.clientSeconds>0&&!signComplete" ion-button color="dark" (click)="goSign()">
     继续添加签名({{client?.clientSeconds}})
   </button>
