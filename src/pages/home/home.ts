@@ -23,7 +23,8 @@ export class HomePage {
   private showGoSign:boolean=false;
   ionViewWillEnter(){
     let ids=this.cookieService.get('ids');
-    if(ids==null){
+    let signid=this.cookieService.get('signid');
+    if(ids==null||signid==null){
 
     }
     else{
@@ -51,11 +52,14 @@ export class HomePage {
   private signComplete:boolean=false;
   initAuth(){
     let signid=this.cookieService.get('signid');
+    if(signid==null){
+      return;
+    }
     this.signService.getClientInfo(signid).then(
       data=>{
         console.log(data);
         let result=this.toolService.apiResult(data);
-        if(result&&result.status==0){
+        if(result){
           this.client={...result.data}
           if(this.client.status==1){
             this.calTime();
@@ -67,9 +71,6 @@ export class HomePage {
 
           }
 
-        }
-        else{
-          this.toolService.toast(result.message)
         }
       },
       error=>{
