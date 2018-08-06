@@ -15,13 +15,15 @@ import {SignPage} from "../pages/sign/sign";
 import {DetailPage} from "../pages/sign/detail";
 import {ToolService} from "../util/tool.service";
 import {SignService} from "../pages/sign/sign.service";
+import {QrPage} from "../pages/sign/qr";
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     SignPage,
-    DetailPage
+    DetailPage,
+    QrPage
   ],
   imports: [
     BrowserModule,
@@ -39,7 +41,8 @@ import {SignService} from "../pages/sign/sign.service";
     MyApp,
     HomePage,
     SignPage,
-    DetailPage
+    DetailPage,
+    QrPage
   ],
   providers: [
     StatusBar,

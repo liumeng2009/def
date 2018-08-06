@@ -1,10 +1,8 @@
 import {Component} from '@angular/core';
-import {NavParams,Events,ViewController,PopoverController} from 'ionic-angular'
+import {NavParams,ViewController} from 'ionic-angular'
 import {Operation} from "../../bean/operation";
 import {ToolService} from "../../util/tool.service";
 import {SignService} from "../sign/sign.service";
-import {SignPage} from "../sign/sign";
-import {ModalController} from "ionic-angular/index";
 import * as moment from 'moment'
 
 
@@ -47,7 +45,7 @@ export class DetailPage {
           }
         },
         error=>{
-          this.toolService.toast(error)
+          this.toolService.apiException(error)
           reject();
         }
       )
@@ -71,7 +69,7 @@ export class DetailPage {
           }
         },
         error=>{
-          this.toolService.toast(error);
+          this.toolService.apiException(error)
           reject()
         }
       )
@@ -94,7 +92,7 @@ export class DetailPage {
           }
         },
         error=>{
-          this.toolService.toast(error);
+          this.toolService.apiException(error)
           reject();
         }
       )

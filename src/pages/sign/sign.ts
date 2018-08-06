@@ -7,6 +7,7 @@ import {DetailPage} from './detail';
 import {SignaturePad} from "angular2-signaturepad/signature-pad";
 import {CookieService} from "angular2-cookie/core";
 import {Client} from '../../bean/client'
+import * as moment from 'moment'
 
 @Component({
   selector: 'sign',
@@ -66,7 +67,7 @@ export class SignPage {
         }
       },
       error=>{
-        this.toolService.toast(error)
+        this.toolService.apiException(error)
       }
     )
   }
@@ -90,8 +91,12 @@ export class SignPage {
   initNo(){
     let params=this.navParams.data.ids;
     let signid=this.navParams.data.signid;
-    this.cookieService.put('ids',params);
-    this.cookieService.put('signid',signid);
+
+    moment.locale('zh_cn');
+    let addDate=moment().add(4,'h').toDate();
+
+    this.cookieService.put('ids',params,{expires:addDate });
+    this.cookieService.put('signid',signid,{expires:addDate });
     let ids=params.split(',');
     console.log(ids);
     this.signService.getOperationNos({ids:ids}).then(
@@ -105,7 +110,7 @@ export class SignPage {
         }
       },
       error=>{
-        this.toolService.toast(error)
+        this.toolService.apiException(error)
       }
     )
   }
@@ -181,7 +186,7 @@ export class SignPage {
           }
         },
         error=>{
-          this.toolService.toast(error);
+          this.toolService.apiException(error)
         }
       )
     }
