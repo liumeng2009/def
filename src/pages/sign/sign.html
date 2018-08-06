@@ -1,5 +1,5 @@
 <ion-header #head>
-  <ion-navbar color="dark">
+  <ion-navbar color="primary">
     <ion-title>
       添加签名
     </ion-title>
@@ -16,7 +16,7 @@
 </ion-content>
 
 <ion-footer #foot>
-  <ion-toolbar color="dark">
+  <ion-toolbar color="primary">
     <p style="margin:0px;">
       <button  *ngFor="let op of ops;let i = index;" [color]="op.done?'secondary':'light'" clear small ion-button (click)="modal(op.id)">
       <ion-icon name="checkmark" color="secondary" *ngIf="op.done"></ion-icon>
