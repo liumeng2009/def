@@ -17,8 +17,10 @@ export class QrPage {
               private viewCtrl:ViewController) {
 
   }
-  private operation:Operation;
+
+  private steam;
   ionViewWillEnter() {
+    let t=this;
     var video = document.getElementById("video"), canvas, context;
 
     try {
@@ -36,10 +38,7 @@ export class QrPage {
       return;
     }
 
-    console.log(navigator);
-    //alert(navigator.getUserMedia)
-    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
-
+    navigator.getUserMedia = navigator.getUserMedia
 
     if (navigator.getUserMedia)
 
@@ -48,26 +47,24 @@ export class QrPage {
 
         function (stream) {
 
-          if (video.mozSrcObject !== undefined)video.mozSrcObject = stream;
+/*          if (video.mozSrcObject !== undefined)video.mozSrcObject = stream;
 
           else video.src = ((window.URL || window.webkitURL || window.mozURL || window.msURL) && window.URL.createObjectURL(stream)) || stream;
 
-          video.play();
+          video.play();*/
+
+          t.steam=stream;
 
         },
 
         function (error) {
           alert(error.name)
           alert(error.message)
-          alert(error.contraintName)
 
-          for(let p in error){
-            //alert(p)
-          }
 
           alert("请检查是否开启摄像头");
 
-          flag = false;
+          let flag = false;
 
         }
       );
