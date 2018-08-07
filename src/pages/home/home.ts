@@ -5,7 +5,6 @@ import {CookieService} from "angular2-cookie/core";
 import {ToolService} from "../../util/tool.service";
 import {SignService} from "../sign/sign.service";
 import {Client} from '../../bean/client';
-import {QrPage} from "../sign/qr";
 
 @Component({
   selector: 'page-home',
@@ -98,10 +97,6 @@ export class HomePage {
 
   ionViewWillLeave(){
     clearInterval(this.loop)
-  }
-
-  goQr(){
-    this.navCtrl.push(QrPage)
   }
 
 
