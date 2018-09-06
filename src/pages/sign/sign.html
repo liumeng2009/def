@@ -1,7 +1,7 @@
 <ion-header #head>
   <ion-navbar color="primary">
     <ion-title>
-      添加签名
+      {{title.getTitle()}}
     </ion-title>
     <ion-buttons end>
       <button *ngIf="client?.clientSeconds>0&&!signComplete" ion-button>还有{{client?.clientSeconds}}秒</button>

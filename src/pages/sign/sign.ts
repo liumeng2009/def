@@ -8,6 +8,7 @@ import {SignaturePad} from "angular2-signaturepad/signature-pad";
 import {CookieService} from "angular2-cookie/core";
 import {Client} from '../../bean/client'
 import * as moment from 'moment'
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'sign',
@@ -20,13 +21,15 @@ export class SignPage {
               private toolService:ToolService,
               private navParams:NavParams,
               private modalCtrl:ModalController,
-              private cookieService:CookieService
+              private cookieService:CookieService,
+              private title:Title
   ) {
 
   }
 
   private ops:Operation[]=[];
   ionViewWillEnter(){
+    this.title.setTitle('签名');
     this.initAuth();
     this.initNo();
   }

@@ -15,7 +15,8 @@ export class DetailPage {
   constructor(private navParams:NavParams,
               private signService:SignService,
               private toolService:ToolService,
-              private viewCtrl:ViewController) {
+              private viewCtrl:ViewController
+              ) {
 
   }
   private operation:Operation;

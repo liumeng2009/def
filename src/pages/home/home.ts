@@ -5,6 +5,9 @@ import {CookieService} from "angular2-cookie/core";
 import {ToolService} from "../../util/tool.service";
 import {SignService} from "../sign/sign.service";
 import {Client} from '../../bean/client';
+import {AboutPage} from "../about/about";
+import {Title} from "@angular/platform-browser";
+import {WorkerPage} from "../worker/worker";
 
 @Component({
   selector: 'page-home',
@@ -16,12 +19,14 @@ export class HomePage {
               private cookieService:CookieService,
               private toolService:ToolService,
               private navParams:NavParams,
-              private signService:SignService
+              private signService:SignService,
+              private title:Title
   ) {
 
   }
   private showGoSign:boolean=false;
   ionViewWillEnter(){
+    this.title.setTitle('一些小程序');
     let ids=this.cookieService.get('ids');
     let signid=this.cookieService.get('signid');
     if(ids==null||signid==null){
@@ -98,6 +103,9 @@ export class HomePage {
   ionViewWillLeave(){
     clearInterval(this.loop)
   }
+
+  private aboutPage=AboutPage
+  private workerPage=WorkerPage
 
 
 }

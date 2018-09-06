@@ -1,22 +1,22 @@
 <ion-header>
   <ion-navbar color="primary">
     <ion-title>
-      一些小工具
+      {{title.getTitle()}}
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
   <ion-list>
-    <ion-item>
+    <ion-item [navPush]="workerPage">
       <ion-icon name="bicycle" color="primary" style="margin-right: 5px"></ion-icon>
-      我们的工程师在哪儿？
+      工程师们在哪儿？
     </ion-item>
     <ion-item>
       <ion-icon name="chatbubbles" color="primary" style="margin-right: 5px"></ion-icon>
       想说点什么？
     </ion-item>
-    <ion-item>
+    <ion-item [navPush]="aboutPage">
       <ion-icon name="information-circle" color="primary" style="margin-right: 5px"></ion-icon>
       关于
     </ion-item>

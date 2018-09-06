@@ -15,13 +15,17 @@ import {SignPage} from "../pages/sign/sign";
 import {DetailPage} from "../pages/sign/detail";
 import {ToolService} from "../util/tool.service";
 import {SignService} from "../pages/sign/sign.service";
+import {AboutPage} from "../pages/about/about";
+import {WorkerPage} from "../pages/worker/worker";
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     SignPage,
-    DetailPage
+    DetailPage,
+    AboutPage,
+    WorkerPage
   ],
   imports: [
     BrowserModule,
@@ -29,7 +33,9 @@ import {SignService} from "../pages/sign/sign.service";
     IonicModule.forRoot(MyApp,{},{
       links:[
         {component:HomePage,name:'HomePage',segment:'home'},
-        {component:SignPage,name:'TabsPage',segment:'sign/:signid/:ids',defaultHistory:[HomePage]}
+        {component:SignPage,name:'SignPage',segment:'sign/:signid/:ids',defaultHistory:[HomePage]},
+        {component:AboutPage,name:'AboutPage',segment:'about',defaultHistory:[HomePage]},
+        {component:WorkerPage,name:'WorkerPage',segment:'worker',defaultHistory:[HomePage]}
       ]
     }),
     SignaturePadModule
@@ -39,7 +45,9 @@ import {SignService} from "../pages/sign/sign.service";
     MyApp,
     HomePage,
     SignPage,
-    DetailPage
+    DetailPage,
+    AboutPage,
+    WorkerPage
   ],
   providers: [
     StatusBar,
