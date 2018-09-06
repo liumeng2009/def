@@ -1,10 +1,23 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="primary">
     <ion-title>
       {{title.getTitle()}}
     </ion-title>
   </ion-navbar>
 </ion-header>
 <ion-content>
+  <ion-refresher #refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-list>
+    <ion-item *ngIf="workers?.length==0">
+      任务等待中！
+    </ion-item>
+    <ion-item *ngFor="let wor of workers">
+      <h2>{{wor?.name}}同学在{{wor?.actions[0]?.start_time | timeshowsimple}}</h2>
+      <p>到达{{wor?.actions[0]?.operation?.order?.corporation?.name}}</p>
+      <p>处理{{wor?.actions[0]?.operation?.businessContent?.equipment}}问题</p>
 
+    </ion-item>
+  </ion-list>
 </ion-content>

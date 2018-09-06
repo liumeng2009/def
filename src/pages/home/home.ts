@@ -26,7 +26,7 @@ export class HomePage {
   }
   private showGoSign:boolean=false;
   ionViewWillEnter(){
-    this.title.setTitle('一些小程序');
+    this.title.setTitle('来看看吧');
     let ids=this.cookieService.get('ids');
     let signid=this.cookieService.get('signid');
     if(ids==null||signid==null){

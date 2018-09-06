@@ -17,6 +17,8 @@ import {ToolService} from "../util/tool.service";
 import {SignService} from "../pages/sign/sign.service";
 import {AboutPage} from "../pages/about/about";
 import {WorkerPage} from "../pages/worker/worker";
+import {WorkerService} from "../pages/worker/worker.service";
+import {TimeShowPipe,TimeShowSimplePipe} from "../pages/worker/timeShow.pipe";
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import {WorkerPage} from "../pages/worker/worker";
     SignPage,
     DetailPage,
     AboutPage,
-    WorkerPage
+    WorkerPage,
+    TimeShowPipe,
+    TimeShowSimplePipe
   ],
   imports: [
     BrowserModule,
@@ -55,6 +59,8 @@ import {WorkerPage} from "../pages/worker/worker";
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     SignService,
     ToolService,
+    WorkerService,
+
     CookieService
   ]
 })
