@@ -50,8 +50,8 @@ export class SignService{
       .catch(this.handleError)
   }
 
-  saveSigns(ids:string[],sign:string,signid:string):Promise<ResponseData>{
-    return this.http.post(this.saveUrl,{signid:signid,sign:sign,ids:ids},{headers: this.headers})
+  saveSigns(ids:string[],sign:string,signid:string,clientInfo:string):Promise<ResponseData>{
+    return this.http.post(this.saveUrl,{signid:signid,sign:sign,ids:ids,clientinfo:clientInfo},{headers: this.headers})
       .toPromise()
       .then(this.extractData)
       .catch(this.handleError)

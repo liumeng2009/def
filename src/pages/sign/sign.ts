@@ -172,7 +172,9 @@ export class SignPage {
       let params=this.navParams.data.ids;
       let signid=this.navParams.data.signid;
       let ids=params.split(',');
-      this.signService.saveSigns(ids,this.signaturePad.toDataURL(),signid).then(
+      let clientinfo=navigator.userAgent;
+      console.log(clientinfo);
+      this.signService.saveSigns(ids,this.signaturePad.toDataURL(),signid,clientinfo).then(
         data=>{
           let result=this.toolService.apiResult(data);
           if(result&&result.status==0){
